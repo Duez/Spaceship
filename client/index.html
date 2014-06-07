@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<title>Configuration</title>
+		<script type="text/javascript" src="loadData.js"></script>
+		<script type="text/javascript" src="index.js"></script>
+	</head>
+	<body>
+		<h1>Spaceship configuration room</h1>
+		<h2>Start a room</h2>
+		<form method="GET" name="" action="">
+			<select name="room" id="room">
+				<option value="0">Command center</option>
+				<option value="1">Life support</option>
+				<option value="2">Defense room</option>
+				<option value="3">Power supply</option>
+				<option value="4">Engine room</option>
+				<option value="5">Weapons room</option>
+			</select>
+        	<input type="button" value="Start"  id="roomButton" />
+    	</form>
+		<h2>Manage server<h2>
+		<form method="POST" action="manage.html">
+        	<a><input type="submit" value="Manage" /></a>
+    	</form>
+	</body>
+</html>
