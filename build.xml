@@ -32,7 +32,6 @@
   
   <target name="compile" depends="prepare">
     <javac srcdir="${src.home}" destdir="${build.home}/classes" deprecation="true" includeAntRuntime="no">
-      <classpath refid="compile.classpath"/>
     </javac>
 
     <jar destfile="${build.home}/distrib/space_server.jar"
