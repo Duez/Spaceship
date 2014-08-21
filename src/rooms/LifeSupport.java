@@ -10,7 +10,6 @@ public class LifeSupport extends Room {
 		this.snapshot = new Snapshot();
 		this.snapshot.isIncrising = true;
 		this.snapshot.oxygenLevel = 100;
-		this.snapshot.time = System.currentTimeMillis();
 	}
 
 	@Override
@@ -58,5 +57,10 @@ public class LifeSupport extends Room {
 		public boolean isIncrising;
 		public long time;
 		public int oxygenLevel;
+	}
+
+	@Override
+	protected void init() {
+		this.snapshot.time = System.currentTimeMillis();
 	}
 }

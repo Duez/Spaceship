@@ -15,6 +15,7 @@ public abstract class Room {
 		this.eventAppears();
 	}
 	
+	protected abstract void init();
 	protected abstract void eventAppears();
 	protected abstract void eventDesappears();
 

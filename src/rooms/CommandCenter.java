@@ -12,4 +12,7 @@ public class CommandCenter extends Room {
 		// Nothing append for the moment
 	}
 
+	@Override
+	protected void init() {}
+
 }
