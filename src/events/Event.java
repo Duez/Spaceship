@@ -8,6 +8,7 @@ public abstract class Event {
 		this.start = System.currentTimeMillis();
 	}
 
+	public abstract void apply();
 	public abstract void solve();
 	
 	public long getStartTime() {

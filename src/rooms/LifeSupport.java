@@ -5,15 +5,18 @@ public class LifeSupport extends Room {
 	private Snapshot snapshot;
 	private double rate;
 	
+	private int maxOxygen;
+	
 	public LifeSupport() {
 		this.rate = 1.0;
 		this.snapshot = new Snapshot();
 		this.snapshot.isIncrising = true;
 		this.snapshot.oxygenLevel = 100;
+		this.maxOxygen = 100;
 	}
 
 	@Override
-	protected void eventAppears() {
+	protected synchronized void eventAppears() {
 		Snapshot snap = new Snapshot();
 		snap.isIncrising = false;
 		snap.time = System.currentTimeMillis();
@@ -26,7 +29,7 @@ public class LifeSupport extends Room {
 	}
 	
 	@Override
-	protected void eventDesappears() {
+	protected synchronized void eventDesappears() {
 		Snapshot snap = new Snapshot();
 		snap.isIncrising = true;
 		snap.time = System.currentTimeMillis();
@@ -53,14 +56,32 @@ public class LifeSupport extends Room {
 		this.rate = rate;
 	}
 	
+	@Override
+	protected void init() {
+		this.snapshot.time = System.currentTimeMillis();
+	}
+	
+	public int getMaxOxygen() {
+		return maxOxygen;
+	}
+	
+	public synchronized void setMaxOxygen(int maxOxygen) {
+		this.snap();
+		this.maxOxygen = maxOxygen;
+	}
+	
+	
+	private void snap() {
+		Snapshot snap = new Snapshot();
+		snap.isIncrising = this.snapshot.isIncrising;
+		snap.oxygenLevel = this.getOxygenLevel();
+		snap.time = System.currentTimeMillis();
+		this.snapshot = snap;
+	}
+
 	private class Snapshot {
 		public boolean isIncrising;
 		public long time;
 		public int oxygenLevel;
-	}
-
-	@Override
-	protected void init() {
-		this.snapshot.time = System.currentTimeMillis();
 	}
 }
