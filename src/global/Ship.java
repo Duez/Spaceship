@@ -13,7 +13,7 @@ import rooms.WeaponsRoom;
 
 public class Ship {
 
-	public static Ship ship = new Ship();
+	public static Ship ship;
 	
 	protected CommandCenter command;
 	protected LifeSupport life;
@@ -51,6 +51,11 @@ public class Ship {
 		this.regulation = new RegulationRoom();
 		this.allRooms.add(this.regulation);
 		this.freeRooms.add(this.regulation);
+	}
+	
+	public void start () {
+		for (Room r : this.allRooms)
+			r.init();
 	}
 	
 	public List<Room> getAllRooms() {

@@ -13,6 +13,6 @@ public class CommandCenter extends Room {
 	}
 
 	@Override
-	protected void init() {}
+	public void init() {}
 
 }

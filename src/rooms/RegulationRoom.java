@@ -3,7 +3,7 @@ package rooms;
 public class RegulationRoom extends Room {
 
 	@Override
-	protected void init() {}
+	public void init() {}
 
 	@Override
 	protected void eventAppears() {}

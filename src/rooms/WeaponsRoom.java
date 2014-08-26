@@ -3,7 +3,7 @@ package rooms;
 public class WeaponsRoom  extends Room {
 
 	@Override
-	protected void init() {}
+	public void init() {}
 
 	@Override
 	protected void eventAppears() {}

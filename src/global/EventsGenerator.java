@@ -14,27 +14,29 @@ import events.NoSignal;
 
 public class EventsGenerator  extends Thread {
 
+	public static EventsGenerator generator; 
+	
 	private double proba;
-	private boolean finished;
+	private boolean ended;
 	
 	private static final Class<?>[] eventsClass = {Aliens.class, Fire.class, Hack.class,
 		ElectricFailure.class, Meteor.class, NoSignal.class}; 
 	
 	public EventsGenerator() {
 		this.proba = 0.1;
-		this.finished = false;
+		this.ended = false;
 	}
 	
 	@Override
 	public void run() {
-		while (!this.finished) {
+		while (!this.ended) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			
-			if (this.finished)
+			if (this.ended)
 				break;
 			
 			double rand = Math.random();
@@ -66,8 +68,12 @@ public class EventsGenerator  extends Thread {
 		return e;
 	}
 	
-	public void setFinished(boolean finished) {
-		this.finished = finished;
+	public void setFinished(boolean ended) {
+		this.ended = ended;
+	}
+	
+	public boolean isEnded() {
+		return ended;
 	}
 	
 	public double getProba() {

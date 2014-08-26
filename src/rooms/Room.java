@@ -18,7 +18,7 @@ public abstract class Room {
 		this.currentEvent.apply();
 	}
 	
-	protected abstract void init();
+	public abstract void init();
 	protected abstract void eventAppears();
 	protected abstract void eventDesappears();
 

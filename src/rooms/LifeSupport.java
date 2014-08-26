@@ -57,7 +57,7 @@ public class LifeSupport extends Room {
 	}
 	
 	@Override
-	protected void init() {
+	public void init() {
 		this.snapshot.time = System.currentTimeMillis();
 	}
 	

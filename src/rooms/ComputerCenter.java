@@ -3,7 +3,7 @@ package rooms;
 public class ComputerCenter extends Room {
 
 	@Override
-	protected void init() {}
+	public void init() {}
 
 	@Override
 	protected void eventAppears() {}

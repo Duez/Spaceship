@@ -24,7 +24,7 @@ public class EngineRoom extends Room {
 	}
 
 	@Override
-	protected void init() {
+	public void init() {
 		this.startTime = System.currentTimeMillis();
 	}
 	
