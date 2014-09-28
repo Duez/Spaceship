@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.json.simple.JSONObject;
 
+import com.httpSimpleRest.services.Service;
+
 public class ConfigureGame implements Service {
 
 	@SuppressWarnings("unchecked")

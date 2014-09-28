@@ -1,10 +1,14 @@
 package global;
 
-import serveur.Serveur;
+import java.io.File;
+
+import com.httpSimpleRest.serveur.ClientThread;
+import com.httpSimpleRest.serveur.Serveur;
+import com.httpSimpleRest.services.ServiciesIndex;
+
 import services.ConfigureGame;
 import services.GameStatus;
 import services.RoomStates;
-import services.ServiciesIndex;
 
 public class Game {
 
@@ -39,7 +43,8 @@ public class Game {
 	
 	public static void main(String[] args) {
 		int port = args.length > 0 ? new Integer(args[0]) : 4242;
-		Serveur serveur = new Serveur(port);
+		Serveur serveur = new Serveur(new File("Clients"), port);
+		ClientThread.verbose = true;
 		
 		ServiciesIndex index = serveur.getIndex();
 		index.put("rooms", new RoomStates());

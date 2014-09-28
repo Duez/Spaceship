@@ -4,7 +4,8 @@ import global.Game;
 
 import java.util.Map;
 
-import serveur.Serveur;
+import com.httpSimpleRest.serveur.Serveur;
+import com.httpSimpleRest.services.Service;
 
 public class GameStatus implements Service {
 	
