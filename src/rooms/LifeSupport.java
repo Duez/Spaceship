@@ -45,9 +45,9 @@ public class LifeSupport extends Room {
 		int level = this.snapshot.oxygenLevel;
 		long duration = System.currentTimeMillis() - this.snapshot.time;
 		if (this.snapshot.isIncrising)
-			level = Math.min(100, level + new Double(duration*this.rate).intValue());
+			level = Math.min(100, new Double(level + duration*this.rate).intValue());
 		else
-			level = Math.max(0, level - new Double(duration*this.rate).intValue());
+			level = Math.max(0, new Double(level - duration*this.rate).intValue());
 		
 		return level;
 	}

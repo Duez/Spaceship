@@ -8,7 +8,7 @@ import com.httpSimpleRest.services.ServiciesIndex;
 
 import services.ConfigureGame;
 import services.GameStatus;
-import services.RoomStates;
+import services.ShipState;
 
 public class Game {
 
@@ -47,7 +47,7 @@ public class Game {
 		ClientThread.verbose = true;
 		
 		ServiciesIndex index = serveur.getIndex();
-		index.put("rooms", new RoomStates());
+		index.put("ship", new ShipState());
 		index.put("config", new ConfigureGame());
 		
 		Game g = new Game();

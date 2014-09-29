@@ -1,15 +1,16 @@
 
-function ServerCommunication {
+function ServerCommunication () {
 	this.xhr = new XMLHttpRequest();
-	this.lock = false;
+	//this.lock = false;
 };
 
 ServerCommunication.prototype.loadData = function (addr, callback) {
-	
+	var xhr = this.xhr;
+
 	this.xhr.onreadystatechange  = function() {
-		if(this.xhr.readyState  == 4) {
-			if(this.xhr.status  == 200) {
-				callback(this.xhr.responseText);
+		if(xhr.readyState  == 4) {
+			if(xhr.status  == 200) {
+				callback(xhr.responseText);
 			}
 		}
 	};
@@ -20,9 +21,10 @@ ServerCommunication.prototype.loadData = function (addr, callback) {
 
 ServerCommunication.prototype.askServer = function (pageName, args, callback) {
 	var request = "http://" + document.location.host + pageName + "?t=" + Math.random();
+	console.log("-> " + request);
 
-	for(var key in arks) {
-    	var value = arks[key];
+	for(var key in args) {
+    	var value = args[key];
     	request += "&" + key + "=" + value;
 	}
 

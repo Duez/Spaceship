@@ -16,11 +16,11 @@
 		<h1>Parameters</h1>
 		<div id="parameters">
 			<p>Event probability (/sec)</p>
-			<input type="text" value="0.1"/>
+			<input type="text" value="0"/>
 			<p>Initial time to goal (sec)</p>
-			<input type="text" value="240"/>
+			<input type="text" value="0"/>
 			<p>Oxygen rate (/sec)</p>
-			<input type="text" value="1"/>
+			<input type="text" value="0"/>
 		</div>
 		<h1>Rooms status</h1>
 		<div id="rooms">
@@ -34,7 +34,7 @@
 					</div>
 					<div class="specialLine">
 						<p class="name">Oxygen : </p>
-						<p class="special">100%</p>
+						<p class="special">???%</p>
 					</div>
 				</div>
 				<div class="room">
@@ -58,7 +58,7 @@
 					</div>
 					<div class="specialLine">
 						<p class="name">Time to goal : </p>
-						<p class="special">04:00</p>
+						<p class="special">??:??</p>
 					</div>
 				</div>
 			</div>
@@ -102,4 +102,8 @@
 			</div>
 		</div>
 	</body>
+
+	<script type="text/javascript" src="js/ServerCommunication.js"></script>
+	<script type="text/javascript" src="js/SpaceshipCommunication.js"></script>
+	<script type="text/javascript" src="js/admin.js"></script>
 </html>

@@ -33,7 +33,10 @@ public class EngineRoom extends Room {
 		if (this.currentEvent != null)
 			duration = this.currentEvent.getDuration();
 		
-		long passedTime = this.startTime + this.switchTime + duration - System.currentTimeMillis();
+		long passedTime = 0;
+		if (this.startTime != 0)
+			passedTime = this.startTime + this.switchTime + duration - System.currentTimeMillis();
+		
 		return timeToGoal - passedTime;
 	}
 	

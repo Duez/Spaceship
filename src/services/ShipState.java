@@ -11,7 +11,7 @@ import com.httpSimpleRest.services.Service;
 
 import rooms.Room;
 
-public class RoomStates implements Service {
+public class ShipState implements Service {
 
 	@SuppressWarnings("unchecked")
 	@Override
