@@ -43,5 +43,9 @@ public class EngineRoom extends Room {
 	public void setBaseTimeToGoal (long duration) {
 		this.timeToGoal = duration;
 	}
+	
+	public long getBaseTimeToGoal() {
+		return timeToGoal;
+	}
 
 }

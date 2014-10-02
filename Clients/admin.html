@@ -25,7 +25,7 @@
 		<h1>Rooms status</h1>
 		<div id="rooms">
 			<div>
-				<div class="room">
+				<div class="room" id="life">
 					<h2>Life Support</h2>
 					<div class="lineEvent">
 						<p class="name">Event : </p>
@@ -37,11 +37,10 @@
 						<p class="special">???%</p>
 					</div>
 				</div>
-				<div class="room">
+				<div class="room" id="command">
 					<h2>Command Center</h2>
 					<div class="lineEvent">
-						<p class="name"></p>
-						<p class="event"></p>
+						<br/>
 						<button></Button>
 					</div>
 					<div class="specialLine">
@@ -49,7 +48,7 @@
 						<p class="special">Not bad</p>
 					</div>
 				</div>
-				<div class="room">
+				<div class="room" id="engine">
 					<h2>Engine Room</h2>
 					<div class="lineEvent">
 						<p class="name">Event : </p>
@@ -63,7 +62,7 @@
 				</div>
 			</div>
 			<div>
-				<div class="room">
+				<div class="room" id="computer">
 					<h2>Computers Room</h2>
 					<div class="lineEvent">
 						<p class="name">Event : </p>
@@ -75,7 +74,7 @@
 						<p class="special">Low</p>
 					</div>
 				</div>
-				<div class="room">
+				<div class="room" id="weapons">
 					<h2>Weapons Room</h2>
 					<div class="lineEvent">
 						<p class="name">Event : </p>
@@ -87,7 +86,7 @@
 						<p class="special">Low</p>
 					</div>
 				</div>
-				<div class="room">
+				<div class="room" id="regulation">
 					<h2>Regulation Room</h2>
 					<div class="lineEvent">
 						<p class="name">Event : </p>
@@ -104,6 +103,6 @@
 	</body>
 
 	<script type="text/javascript" src="js/ServerCommunication.js"></script>
-	<script type="text/javascript" src="js/SpaceshipCommunication.js"></script>
+	<script type="text/javascript" src="js/SpaceshipModel.js"></script>
 	<script type="text/javascript" src="js/admin.js"></script>
 </html>

@@ -70,6 +70,10 @@ public class LifeSupport extends Room {
 		this.maxOxygen = maxOxygen;
 	}
 	
+	public double getRate() {
+		return rate;
+	}
+	
 	
 	private void snap() {
 		Snapshot snap = new Snapshot();

@@ -28,14 +28,14 @@ public class ShipState implements Service {
 			
 			rooms.put(room.getClass().getName(), roomJso);
 			
-			JSONObject eventJso = new JSONObject();
 			if (room.getEvent() != null) {
+				JSONObject eventJso = new JSONObject();
 				Event e = room.getEvent();
 				eventJso.put("name", e.getClass().getName());
 				eventJso.put("duration", e.getDuration());
 				eventJso.put("start", e.getStartTime());
+				roomJso.put("event", eventJso);
 			}
-			roomJso.put("event", eventJso);
 		}
 		answer.put("rooms", rooms);
 		

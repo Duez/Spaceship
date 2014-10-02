@@ -2,17 +2,19 @@ package global;
 
 import java.io.File;
 
+import services.GameManagment;
+import services.ShipState;
+
 import com.httpSimpleRest.serveur.ClientThread;
 import com.httpSimpleRest.serveur.Serveur;
 import com.httpSimpleRest.services.ServiciesIndex;
 
-import services.ConfigureGame;
-import services.GameStatus;
-import services.ShipState;
-
 public class Game {
+	
+	private Status status;
 
 	public Game() {
+		this.status = Status.STOPED;
 		Ship.ship = new Ship();
 		EventsGenerator.generator = new EventsGenerator();
 	}
@@ -23,19 +25,33 @@ public class Game {
 		
 		Ship.ship.start();
 		EventsGenerator.generator.start();
+		this.status = Status.STARTED;
 		
 		return true;
 	}
 	
 	public boolean stop () {
 		EventsGenerator.generator.setFinished(true);
+		this.status = Status.STOPED;
+		
 		return true;
 	}
 	
 	public boolean reset () {
+		this.stop();
 		Ship.ship = new Ship();
 		EventsGenerator.generator = new EventsGenerator();
+		
 		return true;
+	}
+	
+	public Status getStatus() {
+		return status;
+	}
+	
+	
+	public enum Status {
+		STOPED, STARTED, PAUSED;
 	}
 	
 	
@@ -48,10 +64,9 @@ public class Game {
 		
 		ServiciesIndex index = serveur.getIndex();
 		index.put("ship", new ShipState());
-		index.put("config", new ConfigureGame());
 		
 		Game g = new Game();
-		index.put("status", new GameStatus(g, serveur));
+		index.put("managment", new GameManagment(g, serveur));
 		
 		serveur.start();
 	}
