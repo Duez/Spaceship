@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<title>Administration</title>
+		<link rel="stylesheet" type="text/css" href="css/admin.css">
+	</head>
+	<body>
+		<h1>Server status</h1>
+		<div id="status">
+			<p id="log"></p>
+			<div>
+				<button id="start">Start</button>
+				<button id="stop">Stop</button>
+				<button id="reset">Reset</button>
+			</div>
+		</div>
+		<h1>Parameters</h1>
+		<div id="parameters">
+			<p>Event probability (/sec)</p>
+			<input type="text" value="0"/>
+			<p>Initial time to goal (sec)</p>
+			<input type="text" value="0"/>
+			<p>Oxygen rate (/sec)</p>
+			<input type="text" value="0"/>
+			<button id="setValues">Send</button>
+		</div>
+		<h1>Rooms status</h1>
+		<div id="rooms">
+			<div>
+				<div class="room" id="life">
+					<h2>Life Support</h2>
+					<div class="lineEvent">
+						<p class="name">Event : </p>
+						<p class="event">None</p>
+						<button>Delete event</Button>
+					</div>
+					<div class="specialLine">
+						<p class="name">Oxygen : </p>
+						<p class="special">???%</p>
+					</div>
+				</div>
+				<div class="room" id="command">
+					<h2>Command Center</h2>
+					<div class="lineEvent">
+						<br/>
+						<button></Button>
+					</div>
+					<div class="specialLine">
+						<p class="name">Global situation : </p>
+						<p class="special">Not bad</p>
+					</div>
+				</div>
+				<div class="room" id="engine">
+					<h2>Engine Room</h2>
+					<div class="lineEvent">
+						<p class="name">Event : </p>
+						<p class="event">None</p>
+						<button>Delete event</Button>
+					</div>
+					<div class="specialLine">
+						<p class="name">Time to goal : </p>
+						<p class="special">??:??</p>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="room" id="computer">
+					<h2>Computers Room</h2>
+					<div class="lineEvent">
+						<p class="name">Event : </p>
+						<p class="event">None</p>
+						<button>Delete event</Button>
+					</div>
+					<div class="specialLine">
+						<p class="name">Hack risk : </p>
+						<p class="special">Low</p>
+					</div>
+				</div>
+				<div class="room" id="weapons">
+					<h2>Weapons Room</h2>
+					<div class="lineEvent">
+						<p class="name">Event : </p>
+						<p class="event">None</p>
+						<button>Delete event</Button>
+					</div>
+					<div class="specialLine">
+						<p class="name">Alien risk : </p>
+						<p class="special">Low</p>
+					</div>
+				</div>
+				<div class="room" id="regulation">
+					<h2>Regulation Room</h2>
+					<div class="lineEvent">
+						<p class="name">Event : </p>
+						<p class="event">None</p>
+						<button>Delete event</Button>
+					</div>
+					<div class="specialLine">
+						<p class="name">Fire risk : </p>
+						<p class="special">Low</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="js/ServerCommunication.js"></script>
+	<script type="text/javascript" src="js/SpaceshipModel.js"></script>
+	<script type="text/javascript" src="js/admin.js"></script>
+</html>
