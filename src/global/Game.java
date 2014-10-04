@@ -2,7 +2,9 @@ package global;
 
 import java.io.File;
 
+import rooms.Room;
 import services.GameManagment;
+import services.RoomSolver;
 import services.ShipState;
 
 import com.httpSimpleRest.serveur.ClientThread;
@@ -14,7 +16,7 @@ public class Game {
 	private Status status;
 
 	public Game() {
-		this.status = Status.STOPED;
+		this.status = Status.READY;
 		Ship.ship = new Ship();
 		EventsGenerator.generator = new EventsGenerator();
 	}
@@ -32,6 +34,8 @@ public class Game {
 	
 	public boolean stop () {
 		EventsGenerator.generator.setFinished(true);
+		for (Room r : Ship.ship.allRooms)
+			r.end();
 		this.status = Status.STOPED;
 		
 		return true;
@@ -41,6 +45,7 @@ public class Game {
 		this.stop();
 		Ship.ship = new Ship();
 		EventsGenerator.generator = new EventsGenerator();
+		this.status = Status.READY;
 		
 		return true;
 	}
@@ -51,7 +56,7 @@ public class Game {
 	
 	
 	public enum Status {
-		STOPED, STARTED, PAUSED;
+		STOPED, STARTED, READY;
 	}
 	
 	
@@ -61,11 +66,12 @@ public class Game {
 		int port = args.length > 0 ? new Integer(args[0]) : 4242;
 		Serveur serveur = new Serveur(new File("Clients"), port);
 		ClientThread.verbose = true;
+
+		Game g = new Game();
 		
 		ServiciesIndex index = serveur.getIndex();
-		index.put("ship", new ShipState());
-		
-		Game g = new Game();
+		index.put("solve", new RoomSolver());
+		index.put("ship", new ShipState(g));
 		index.put("managment", new GameManagment(g, serveur));
 		
 		serveur.start();

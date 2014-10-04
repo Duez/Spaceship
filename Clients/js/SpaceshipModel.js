@@ -11,7 +11,10 @@ Spaceship.prototype.refresh = function () {
 
 Spaceship.prototype.loadData = function (data) {
 	spaceship.data = JSON.parse(data);
-	console.log(spaceship.data);
+}
+
+Spaceship.prototype.solveRoom = function (room) {
+	this.servCom.askServer("/solve", {"room":room}, function(){})
 }
 
 

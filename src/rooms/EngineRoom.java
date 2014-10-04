@@ -7,7 +7,10 @@ public class EngineRoom extends Room {
 	
 	private long timeToGoal;
 	
+	private long saveTime;
+	
 	public EngineRoom() {
+		this.ended = false;
 		this.switchTime = 0;
 		this.timeToGoal = 60*4;
 	}
@@ -29,15 +32,18 @@ public class EngineRoom extends Room {
 	}
 	
 	public long timeToGoal () {
+		if (this.ended)
+			return this.saveTime;
+		
 		long duration = 0;
 		if (this.currentEvent != null)
 			duration = this.currentEvent.getDuration();
 		
 		long passedTime = 0;
 		if (this.startTime != 0)
-			passedTime = this.startTime + this.switchTime + duration - System.currentTimeMillis();
+			passedTime = System.currentTimeMillis() - (this.startTime + this.switchTime + duration);
 		
-		return timeToGoal - passedTime;
+		return timeToGoal - (passedTime / 1000);
 	}
 	
 	public void setBaseTimeToGoal (long duration) {
@@ -46,6 +52,11 @@ public class EngineRoom extends Room {
 	
 	public long getBaseTimeToGoal() {
 		return timeToGoal;
+	}
+	
+	@Override
+	protected void save() {
+		this.saveTime = this.timeToGoal();
 	}
 
 }

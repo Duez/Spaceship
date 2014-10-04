@@ -21,7 +21,7 @@ ServerCommunication.prototype.loadData = function (addr, callback) {
 
 ServerCommunication.prototype.askServer = function (pageName, args, callback) {
 	var request = "http://" + document.location.host + pageName + "?t=" + Math.random();
-	console.log("-> " + request);
+	//console.log("-> " + request);
 
 	for(var key in args) {
     	var value = args[key];

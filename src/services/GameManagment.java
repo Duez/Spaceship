@@ -53,7 +53,8 @@ public class GameManagment implements Service {
 			String value = args.get("proba");
 			try {
 				Double d = Double.parseDouble(value);
-				EventsGenerator.generator.setProba(d);
+				if (d > 0)
+					EventsGenerator.generator.setProba(d);
 			} catch (NumberFormatException e) {
 				
 			}
@@ -61,11 +62,12 @@ public class GameManagment implements Service {
 		jso.put("proba", EventsGenerator.generator.getProba());
 		
 		// Set base time to goal (in seconds)
-		if (args.containsKey("time")) {
-			String value = args.get("time");
+		if (args.containsKey("baseTime")) {
+			String value = args.get("baseTime");
 			try {
 				Integer i = Integer.parseInt(value);
-				Ship.ship.getEngine().setBaseTimeToGoal(i);
+				if (i > 0)
+					Ship.ship.getEngine().setBaseTimeToGoal(i);
 			} catch (NumberFormatException e) {
 				
 			}
@@ -73,11 +75,12 @@ public class GameManagment implements Service {
 		jso.put("baseTime", Ship.ship.getEngine().getBaseTimeToGoal());
 		
 		// Set the decrease/increase of oxygen each second.
-		if (args.containsKey("oxygen")) {
-			String value = args.get("oxygen");
+		if (args.containsKey("oxygenRate")) {
+			String value = args.get("oxygenRate");
 			try {
 				Double d = Double.parseDouble(value);
-				Ship.ship.getLife().setRate(d);
+				if (d > 0)
+					Ship.ship.getLife().setRate(d);
 			} catch (NumberFormatException e) {
 				
 			}

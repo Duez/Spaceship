@@ -1,6 +1,7 @@
 package services;
 
 import events.Event;
+import global.Game;
 import global.Ship;
 
 import java.util.Map;
@@ -12,11 +13,20 @@ import com.httpSimpleRest.services.Service;
 import rooms.Room;
 
 public class ShipState implements Service {
+	
+	private Game game;
+	
+	public ShipState(Game g) {
+		this.game = g;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public StringBuffer getAnswer(Map<String, String> arg0) {
 		Ship s = Ship.ship;
+		
+		if (s.getEngine().timeToGoal() == 0 || s.getLife().getOxygenLevel() == 0)
+			this.game.stop();
 		
 		JSONObject answer = new JSONObject();
 		answer.put("oxygen", s.getLife().getOxygenLevel());

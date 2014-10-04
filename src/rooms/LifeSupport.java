@@ -8,6 +8,7 @@ public class LifeSupport extends Room {
 	private int maxOxygen;
 	
 	public LifeSupport() {
+		this.ended = false;
 		this.rate = 1.0;
 		this.snapshot = new Snapshot();
 		this.snapshot.isIncrising = true;
@@ -22,8 +23,8 @@ public class LifeSupport extends Room {
 		snap.time = System.currentTimeMillis();
 		
 		int level = this.snapshot.oxygenLevel;
-		long duration = System.currentTimeMillis() - this.snapshot.time;
-		snap.oxygenLevel = Math.max(0, level + new Double(duration*this.rate).intValue());
+		long duration = (System.currentTimeMillis() - this.snapshot.time) / 1000;
+		snap.oxygenLevel = Math.max(0, Math.min(100, level + new Double(duration*this.rate).intValue()));
 		
 		this.snapshot = snap;
 	}
@@ -35,15 +36,19 @@ public class LifeSupport extends Room {
 		snap.time = System.currentTimeMillis();
 		
 		int level = this.snapshot.oxygenLevel;
-		long duration = System.currentTimeMillis() - this.snapshot.time;
+		long duration = (System.currentTimeMillis() - this.snapshot.time) / 1000;
 		snap.oxygenLevel = Math.max(0, level - new Double(duration*this.rate).intValue());
 		
 		this.snapshot = snap;
 	}
 
 	public int getOxygenLevel () {
+		if (this.ended)
+			return this.snapshot.oxygenLevel;
+		
 		int level = this.snapshot.oxygenLevel;
-		long duration = System.currentTimeMillis() - this.snapshot.time;
+		long duration = (System.currentTimeMillis() - this.snapshot.time) / 1000;
+		
 		if (this.snapshot.isIncrising)
 			level = Math.min(100, new Double(level + duration*this.rate).intValue());
 		else
@@ -87,5 +92,10 @@ public class LifeSupport extends Room {
 		public boolean isIncrising;
 		public long time;
 		public int oxygenLevel;
+	}
+	
+	@Override
+	protected void save() {
+		this.snap();
 	}
 }

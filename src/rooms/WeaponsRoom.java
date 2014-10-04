@@ -14,5 +14,8 @@ public class WeaponsRoom  extends Room {
 	public double getAliensProbaIdx () {
 		return this.currentEvent == null ? 0.5 : 1.0;
 	}
+
+	@Override
+	protected void save() {}
 	
 }

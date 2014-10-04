@@ -3,16 +3,15 @@ package rooms;
 public class CommandCenter extends Room {
 
 	@Override
-	protected void eventAppears() {
-		// Nothing append for the moment
-	}
+	protected void eventAppears() {}
 
 	@Override
-	protected void eventDesappears() {
-		// Nothing append for the moment
-	}
+	protected void eventDesappears() {}
 
 	@Override
 	public void init() {}
+
+	@Override
+	protected void save() {}
 
 }

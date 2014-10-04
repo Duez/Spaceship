@@ -6,6 +6,7 @@ import global.Ship;
 public abstract class Room {
 
 	protected Event currentEvent;
+	protected boolean ended = true;
 	
 	public Event getEvent () {
 		return this.currentEvent;
@@ -21,6 +22,12 @@ public abstract class Room {
 	public abstract void init();
 	protected abstract void eventAppears();
 	protected abstract void eventDesappears();
+	
+	public void end () {
+		this.save();
+		this.ended = true;
+	}
+	protected abstract void save();
 
 	public void solveEvent () {
 		this.eventDesappears();

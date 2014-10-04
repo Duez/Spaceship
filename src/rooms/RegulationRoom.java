@@ -15,4 +15,7 @@ public class RegulationRoom extends Room {
 		return this.currentEvent == null ? 0.5 : 1.0;
 	}
 
+	@Override
+	protected void save() {}
+
 }
