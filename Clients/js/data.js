@@ -81,7 +81,7 @@ rooms_def = {
     {
         "name" : "engine room",
         "color" : "rgba(136,134,60,1)",
-        "broken" : "spaceship immobilized
+        "broken" : "spaceship immobilized"
     },    
 	"default" : 
 	{
