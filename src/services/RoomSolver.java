@@ -4,34 +4,41 @@ import global.Ship;
 
 import java.util.Map;
 
+import rooms.Room;
+
 import com.httpSimpleRest.services.Service;
 
 public class RoomSolver implements Service {
 
 	@Override
 	public StringBuffer getAnswer(Map<String, String> args) {
-		if (args.containsKey("room"))
+		if (args.containsKey("room")) {
+			Room r = null;
 			switch (args.get("room")) {
 			case "computer":
-				Ship.ship.getComputer().solveEvent();
+				r = Ship.ship.getComputer();
 				break;
 			case "regulation":
-				Ship.ship.getRegulation().solveEvent();
+				r = Ship.ship.getRegulation();
 				break;
 			case "weapons":
-				Ship.ship.getWeapons().solveEvent();
+				r = Ship.ship.getWeapons();
 				break;
 			case "life":
-				Ship.ship.getLife().solveEvent();
+				r = Ship.ship.getLife();
 				break;
 			case "engine":
-				Ship.ship.getEngine().solveEvent();
+				r = Ship.ship.getEngine();
 				break;
 
 			default:
 				break;
 			}
-		return null;
+			
+			if (r != null && r.getEvent() != null)
+				r.solveEvent();
+		}
+		return new StringBuffer();
 	}
 
 }
