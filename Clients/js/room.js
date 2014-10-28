@@ -141,7 +141,7 @@ Room.prototype = {
     
     //ecran du verrou
     print : function (text){
-        this.lock_div.innerHTML = this.input + "<span class='bar'></span>"
+        this.lock_div.innerHTML = this.input + "<span class='bar'>_</span>"
     },
     
     //tentative d'ouverture
