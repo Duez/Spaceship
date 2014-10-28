@@ -12,6 +12,7 @@ function Room() {
     this.init()
     this.lock();  
     this.event_solved=[]
+    this.print();
 }
 
 
@@ -123,8 +124,9 @@ Room.prototype = {
     },
     
     //input event handler
-    checkKey : function(e) {    
+    checkKey : function(e) {
         e = e || window.event;
+        e.preventDefault()
         
         if (e.keyCode == 8){
             this.input = this.input.substring(0, this.input.length-1)
@@ -150,6 +152,8 @@ Room.prototype = {
         
         if (typeof password[this.input.toLowerCase()] != 'undefined' ){
             this.player = password[this.input.toLowerCase()]
+            this.print()
+            release_keyboard()
             this.open()
         }else{
             console.log("plop")
@@ -250,6 +254,7 @@ Game1.prototype = {
     
     checkKey : function(e) {	
         e = e || window.event;
+        e.preventDefault()
 		
         if(this.key == e.keyCode.toString() & this.up){
             this.count++;
@@ -307,6 +312,8 @@ Game2.prototype = {
     
     checkKey : function(e) {	
         e = e || window.event;
+        e.preventDefault()
+        
         if(this.key == e.keyCode.toString()){
             this.count++;
 			this.level.css("width", "" + Math.floor( (this.count/this.goal)*100 ) + "%");
