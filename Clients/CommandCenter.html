@@ -5,47 +5,14 @@
     </head>
 
     <body>
-        <div id="screen">
+    
+        <div id="screen"> <img src="img/commandCenter.png" class="img"/>
         
-            <div id="top-container">
-                <div id="oxygen-container" class="gauge_box">
-                    <div class="gauge_name">oxygen level <span id="oxygen_status" class="status">ok</span></div>
-                    <div class="gauge_table">
-                        <div class="gauge_cell">
-                            <div class="gauge"><div id="oxygen_level" class="gauge_level oxygen"></div></div> 
-                        </div><div class="gauge_cell">
-                            <div class="gauge_value" id="oxygen_value"> 50% </div>    
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="goal-container" class="gauge_box">
-                    <div class="gauge_name">goal<span id="goal_status" class="status">ok</span></div>
-                    <div class="gauge_table">
-                        <div class="gauge_cell">
-                            <div class="gauge"><div id="goal_level" class="gauge_level goal"></div></div> 
-                        </div><div class="gauge_cell">
-                            <div class="gauge_value" id="goal_value"> 2:30 </div>    
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="time-container" class="gauge_box inactive">
-                    <div class="gauge_name">time left</div>
-                    <div class="gauge_table">
-                        <div class="gauge_cell">           
-                            <div class="gauge"><div id="time_level" class="gauge_level time"></div></div> 
-                        </div><div class="gauge_cell">
-                            <div class="gauge_value" id="time_value"> 20:00 </div>   
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="oxygen"><div id="oxygen_level" class="gauge_level oxygen"></div></div>
+
+            <div id="goal"> 2:30 </div>    
             
-            
-            <div id="main-container">
-                <canvas id="ship"></canvas>
-            </div>
+            <canvas id="ship"></canvas>      
             
         </div>
         
