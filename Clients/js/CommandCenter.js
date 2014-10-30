@@ -1,4 +1,10 @@
 
+//
+var xc = 0.5
+var yc = 0.481
+var r1 = 0.48
+var r2 = 0.44
+
 /*
  *
  * */
@@ -44,7 +50,7 @@ CommandCenter.prototype = {
      * */
     init_rooms : function () {
         console.log("CommandCenter: init interface") 
-        var container = document.getElementById("main-container")
+        var container = document.getElementById("screen")
         
         for (var key in spaceship.data.rooms) {
             var type = rooms_def[key].name
@@ -88,10 +94,7 @@ CommandCenter.prototype = {
     
     init_oxygen : function () {
         this.oxygen = {
-            "box" : document.getElementById("oxygen-container"),
-            "status" : document.getElementById("oxygen_status"),
             "level" : document.getElementById("oxygen_level"),
-            "value" : document.getElementById("oxygen_value"),
             "max" : spaceship.data.oxygen,
             "last" : spaceship.data.oxygen
         }
@@ -99,10 +102,7 @@ CommandCenter.prototype = {
     
     init_goal : function () {
         this.goal = {
-            "box" : document.getElementById("goal-container"),
-            "status" : document.getElementById("goal_status"),
-            "level" : document.getElementById("goal_level"),
-            "value" : document.getElementById("goal_value"),
+            "value" : document.getElementById("goal"),
             "max" : spaceship.data.time,
             "last" : spaceship.data.time
         }
@@ -127,21 +127,21 @@ CommandCenter.prototype = {
      * 
      * */
     update_room_pos : function  () {
-        var width = document.getElementById("main-container").offsetWidth
-        var height = document.getElementById("main-container").offsetHeight
+        var width = document.getElementById("screen").offsetWidth
+        var height = document.getElementById("screen").offsetHeight
         
         var margin = 0.03*height
         var room_width = 0.2*width
         var room_height = this.rooms[0].box.offsetHeight
         
         var ellipse_width = width - room_width - margin
-        var ellipse_height = height - room_height -margin
+        var ellipse_height = 0.85*height - room_height -margin
         
         for (var i in this.rooms) {
             //YEAHHHH math
             var o = (Math.PI*2) * ( (0.5+parseFloat(i))/this.rooms.length ) 
-            var x = Math.round( (width/2)  + ( Math.sin(o) * (ellipse_width/2) ) ) 
-            var y = Math.round( (height/2) + ( Math.cos(o) * (ellipse_height/2) ) )
+            var x = Math.round( width*xc  + ( Math.sin(o) * (ellipse_width/2) ) ) 
+            var y = Math.round( height*yc + ( Math.cos(o) * (ellipse_height/2) ) )
             
             //
             var r = this.rooms[i].box
@@ -153,11 +153,9 @@ CommandCenter.prototype = {
     
     update_goal : function () {
         if ((this.goal.last - spaceship.data.time) > 0){
-            this.goal.status.style.color = "rgba(7,165,210,1)"
-            this.goal.status.innerHTML = "ship is moving"
+            this.goal.value.style.color = "rgba(7,165,210,1)"
         }else{
-            this.goal.status.style.color = "rgba(253,0,13,1)"
-            this.goal.status.innerHTML = "ship as stopped"
+            this.goal.value.style.color = "rgba(253,0,13,1)"
         }
         
         var t = spaceship.data.time 
@@ -165,20 +163,15 @@ CommandCenter.prototype = {
         if (sec<10) sec = "0"+sec
             
         this.goal.value.innerHTML = Math.floor(t/60) + ":" + sec
-        this.goal.level.style.width = (100-(t/this.goal.max)*100)+"%"
         this.goal.last = spaceship.data.time
     },
     
     update_oxygen : function () {
         if ((this.oxygen.last - spaceship.data.oxygen) <= 0){
-            this.oxygen.status.style.color = "rgba(7,165,210,1)"
-            this.oxygen.status.innerHTML = "ok"
+            this.oxygen.level.className = "gauge_level oxygen"
         }else{
-            this.oxygen.status.style.color = "rgba(253,0,13,1)"
-            this.oxygen.status.innerHTML = "leak detected"
+            this.oxygen.level.className = "gauge_level oxygen2"
         }
-        
-        this.oxygen.value.innerHTML = ((spaceship.data.oxygen/this.oxygen.max)*100).toFixed(1)+"%"
         this.oxygen.level.style.width = ((spaceship.data.oxygen/this.oxygen.max)*100)+"%"
         this.oxygen.last = spaceship.data.oxygen
     },
@@ -252,18 +245,18 @@ function shipProc(p) {
     p.drawSegment = function(start,stop,broken) {
         
         var m = (start+stop)/2
-        var x = (p.width/2) + 10*Math.cos(m) 
-        var y = (p.height/2) + 10*Math.sin(m)
+        var x = p.width*xc + 10*Math.cos(m) 
+        var y = p.height*yc + 10*Math.sin(m)
         
         if (broken){
             p.fill(253,0,13,(80+Math.cos(p.frameCount/5)*60) )
         }else{
             p.fill(7,165,210,80)
         }
-        p.arc( x, y, 0.8*p.width, 0.8*p.height, start, stop)
+        p.arc( x, y, r1*p.width, r2*p.height, start, stop)
         
-        p.line(x, y, x+Math.cos(stop)*0.8*(p.width/2) , y+Math.sin(stop)*0.8*(p.height/2) )
-        p.line(x, y, x+Math.cos(start)*0.8*(p.width/2) , y+Math.sin(start)*0.8*(p.height/2) )
+        p.line(x, y, x+Math.cos(stop)*r1*(p.width/2) , y+Math.sin(stop)*r2*(p.height/2) )
+        p.line(x, y, x+Math.cos(start)*r1*(p.width/2) , y+Math.sin(start)*r2*(p.height/2) )
     }
 
 }   
