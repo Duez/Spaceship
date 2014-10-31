@@ -54,9 +54,9 @@ event_def = {
      
 //lower case only
 password = {
-    "mario" : "firefighter",
-    "luigi" : "marine",
-    "peach" : "engineer"
+    "axe" : "firefighter",
+    "knife" : "marine",
+    "pencil" : "engineer"
 }
 
 rooms_def = {
