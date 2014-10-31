@@ -182,7 +182,7 @@ function MiniGames (id, n, callback) {
 	this.n=n;
 	this.id=id;
     this.callback = callback;
-	this.gameList = [Game1,Game2]
+	this.gameList = [Game1,Game2,Game3]
 	
 	this.nextGame();
 }
@@ -325,6 +325,63 @@ Game2.prototype = {
 		this.div.addClass("inactive")
 		this.callback()
 	}
+    
+}
+
+function Game3 (id, callback) {
+    this.id =id;
+    this.callback = callback;
+    this.init();    
+}
+
+Game3.prototype = {
+ 
+    init : function () {
+        var self = this;    //javascript magic
+        this.goal = 20; //nombre de hit a effectuer
+        this.count = 0;
+        this.key1 = 97 + Math.floor(Math.random()*26) //choose random letter
+        this.key2 = 97 + Math.floor(Math.random()*26) //choose random letter
+        this.previousKey = 0;
+        
+        this.display();
+        
+        //take control of input
+        document.onkeypress = function (e) { self.checkKey(e);}
+    },
+    
+    display : function () {
+        this.div = jQuery('<div/>', {
+            html: "altern keys <span class='key'>" + String.fromCharCode(this.key1) + "</span>  and <span class='key'>" + String.fromCharCode(this.key2) + "</span> ",
+            style: 'display : none',
+            class: 'minigame'
+        })
+        .appendTo("#"+this.id)
+        .slideDown(200);
+        
+        this.gauge = jQuery('<div/>', {class: 'gauge'})
+        .appendTo(this.div)
+        
+        this.level = jQuery('<div/>', {class: 'gauge_level'})
+        .appendTo(this.gauge)
+    },
+    
+    checkKey : function(e) {    
+        e = e || window.event;
+        e.preventDefault()
+        
+        if ( ( this.key1 == e.keyCode.toString() || this.key2 == e.keyCode.toString() ) && e.keyCode.toString() != this.previousKey) {
+            this.previousKey = e.keyCode.toString() 
+            this.count++;
+            this.level.css("width", "" + Math.floor( (this.count/this.goal)*100 ) + "%");
+        }
+        if (this.count>=this.goal) this.end()
+    },
+    
+    end : function () {
+        this.div.addClass("inactive")
+        this.callback()
+    }
     
 }
 
