@@ -74,6 +74,7 @@ public class Game {
 		index.put("ship", new ShipState(g));
 		index.put("managment", new GameManagment(g, server));
 		
+		ClientThread.verbose = false;
 		server.start();
 	}
 	

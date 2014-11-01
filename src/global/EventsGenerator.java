@@ -1,5 +1,6 @@
 package global;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,12 +43,14 @@ public class EventsGenerator  extends Thread {
 			double rand = Math.random();
 			
 			if (rand <= this.proba) {
-				List<Room> empty = Ship.ship.getFreeRooms();
-				if (empty.size() > 0) {
-					Collections.shuffle(empty);
-					Event e = this.generateEvent();
-					empty.get(0).setEvent(e);
-				}
+				List<Room> rooms = new ArrayList<Room>(Ship.ship.getAllRooms());
+				rooms.remove(Ship.ship.getCommand());
+				Collections.shuffle(rooms);
+				Room r = rooms.get(0);
+				Event e = this.generateEvent();
+				
+				if (r.getEvent() == null)
+					r.setEvent(e);
 			}
 		}
 	}

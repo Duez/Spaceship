@@ -12,8 +12,9 @@ public class RoomSolver implements Service {
 
 	@Override
 	public StringBuffer getAnswer(Map<String, String> args) {
-		if (args.containsKey("room")) {
+		if (args.containsKey("room") && args.containsKey("time")) {
 			Room r = null;
+			long time = new Long(args.get("time"));
 			switch (args.get("room")) {
 			case "computer":
 				r = Ship.ship.getComputer();
@@ -36,7 +37,7 @@ public class RoomSolver implements Service {
 			}
 			
 			if (r != null && r.getEvent() != null)
-				r.solveEvent();
+				r.solveEvent(time);
 		}
 		return new StringBuffer();
 	}

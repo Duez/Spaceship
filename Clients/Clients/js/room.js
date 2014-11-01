@@ -44,16 +44,7 @@ Room.prototype = {
         
         $("#door_label").html(rooms_def[this.roomID].name)
         $("#room_name").html(rooms_def[this.roomID].name)
-	this.update();        
-    },
-
-    update : function(){
-	console.log("bob")
-	var self = this;
-	if (typeof spaceship.data.rooms[this.roomID].event != 'undefined'){
-		if (this.event_solved.indexOf(spaceship.data.rooms[this.roomID].event.start) != -1){ this.solve() }
-	}
-	window.setTimeout(function(){self.update()}, 1000);
+        
     },
     
     //ouvre la porte
@@ -71,16 +62,14 @@ Room.prototype = {
     
     //ferme la porte
     close : function() {
-	var self=this;
         $('#red_left').fadeIn(1000);
         $('#red_right').fadeIn(1000);
         setTimeout(function(){
             $('#door_right').animate({ left: "42%"}, 500);
             $('#door_left').animate({ left: "0%"}, 500);
         },800);
-        this.input=""
-	this.print()
-        setTimeout(function(){self.lock()},1500);
+        
+        this.lock()
     },
     
     //
@@ -94,7 +83,7 @@ Room.prototype = {
             $("#room_event").html("room status : OK")
             setTimeout(function(){
                 self.close()
-            },1500);
+            },1500);x
             
             return
         }
@@ -278,7 +267,6 @@ Game1.prototype = {
     },
 	
 	end : function () {
-		release_keyboard()
 		this.div.addClass("inactive")
 		this.callback()
 	}
@@ -339,7 +327,6 @@ Game2.prototype = {
     },
 	
 	end : function () {
-		release_keyboard()
 		this.div.addClass("inactive")
 		this.callback()
 	}
@@ -400,7 +387,6 @@ Game3.prototype = {
     },
     
     end : function () {
-	release_keyboard()
         this.div.addClass("inactive")
         this.callback()
     }
