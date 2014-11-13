@@ -3,3 +3,6 @@
 /bin
 
 .classpath
+
+*.class
+/classes/

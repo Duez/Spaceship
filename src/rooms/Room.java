@@ -17,6 +17,7 @@ public abstract class Room {
 		Ship.ship.getFreeRooms().remove(this);
 		this.eventAppears();
 		this.currentEvent.apply();
+		System.out.println(this.getClass().toString() + " : " + this.getEvent().getClass().toString() + " added");
 	}
 	
 	public abstract void init();
@@ -29,7 +30,12 @@ public abstract class Room {
 	}
 	protected abstract void save();
 
-	public void solveEvent () {
+	public void solveEvent (long time) {
+		System.out.println("Room " + this.getClass().getName() + "   Time : " + time + "  /  " + this.getEvent().getStartTime());
+		if (time != this.currentEvent.getStartTime())
+			return;
+		
+		System.out.println(this.getClass().toString() + " : " + this.getEvent().getClass().toString() + " solved");
 		this.eventDesappears();
 		Event e = this.currentEvent;
 		this.currentEvent = null;
