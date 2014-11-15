@@ -1,7 +1,6 @@
 package rooms;
 
 import events.Event;
-import global.Ship;
 
 public abstract class Room {
 
@@ -14,7 +13,6 @@ public abstract class Room {
 	
 	public void setEvent(Event event) {
 		this.currentEvent = event;
-		Ship.ship.getFreeRooms().remove(this);
 		this.eventAppears();
 		this.currentEvent.apply();
 		System.out.println(this.getClass().toString() + " : " + this.getEvent().getClass().toString() + " added");
@@ -39,7 +37,6 @@ public abstract class Room {
 		this.eventDesappears();
 		Event e = this.currentEvent;
 		this.currentEvent = null;
-		Ship.ship.getFreeRooms().add(this);
 		
 		e.solve();
 	}

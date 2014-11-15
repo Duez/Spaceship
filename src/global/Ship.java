@@ -23,34 +23,27 @@ public class Ship {
 	protected RegulationRoom regulation;
 	
 	protected List<Room> allRooms;
-	protected List<Room> freeRooms;
 	
 	public Ship() {
 		this.allRooms = new ArrayList<>();
-		this.freeRooms = new ArrayList<>();
 		
 		this.command = new CommandCenter();
 		this.allRooms.add(this.command);
 		
 		this.life = new LifeSupport();
 		this.allRooms.add(this.life);
-		this.freeRooms.add(this.life);
 		
 		this.engine = new EngineRoom();
 		this.allRooms.add(this.engine);
-		this.freeRooms.add(this.engine);
 		
 		this.computer = new ComputerCenter();
 		this.allRooms.add(this.computer);
-		this.freeRooms.add(this.computer);
 		
 		this.weapons = new WeaponsRoom();
 		this.allRooms.add(this.weapons);
-		this.freeRooms.add(this.weapons);
 		
 		this.regulation = new RegulationRoom();
 		this.allRooms.add(this.regulation);
-		this.freeRooms.add(this.regulation);
 	}
 	
 	public void start () {
@@ -60,10 +53,6 @@ public class Ship {
 	
 	public List<Room> getAllRooms() {
 		return allRooms;
-	}
-	
-	public List<Room> getFreeRooms() {
-		return freeRooms;
 	}
 	
 	public CommandCenter getCommand() {
