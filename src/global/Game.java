@@ -8,6 +8,7 @@ import rooms.Room;
 import services.GameManagment;
 import services.RoomSolver;
 import services.ShipState;
+import services.StatsService;
 import stats.StatsManager;
 
 import com.httpSimpleRest.serveur.ClientThread;
@@ -88,6 +89,7 @@ public class Game {
 		index.put("solve", new RoomSolver());
 		index.put("ship", new ShipState(g));
 		index.put("managment", new GameManagment(g, server));
+		index.put("stats", new StatsService());
 		
 		ClientThread.verbose = false;
 		server.start();
