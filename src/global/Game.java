@@ -1,11 +1,14 @@
 package global;
 
+import global.Ship.State;
+
 import java.io.File;
 
 import rooms.Room;
 import services.GameManagment;
 import services.RoomSolver;
 import services.ShipState;
+import stats.StatsManager;
 
 import com.httpSimpleRest.serveur.ClientThread;
 import com.httpSimpleRest.serveur.Serveur;
@@ -14,11 +17,13 @@ import com.httpSimpleRest.services.ServiciesIndex;
 public class Game {
 	
 	private Status status;
+	private StatsManager sm;
 
 	public Game() {
 		this.status = Status.READY;
 		Ship.ship = new Ship();
 		EventsGenerator.generator = new EventsGenerator();
+		this.sm = new StatsManager();
 	}
 	
 	public boolean start () {
@@ -36,6 +41,15 @@ public class Game {
 		EventsGenerator.generator.setFinished(true);
 		for (Room r : Ship.ship.allRooms)
 			r.end();
+		
+		if (Ship.ship.state == State.ENDED) {
+			File directory = new File("data");
+			if (!directory.exists())
+				directory.mkdir();
+			this.sm.save(new File("data/stats.json"));
+		} else
+			Ship.ship.state = State.KILLED;
+
 		this.status = Status.STOPED;
 		
 		return true;
@@ -45,6 +59,7 @@ public class Game {
 		this.stop();
 		Ship.ship = new Ship();
 		EventsGenerator.generator = new EventsGenerator();
+		this.sm = new StatsManager();
 		this.status = Status.READY;
 		
 		return true;

@@ -1,8 +1,10 @@
 package rooms;
 
+import java.util.Observable;
+
 import events.Event;
 
-public abstract class Room {
+public abstract class Room extends Observable {
 
 	protected Event currentEvent;
 	protected boolean ended = true;
@@ -15,7 +17,10 @@ public abstract class Room {
 		this.currentEvent = event;
 		this.eventAppears();
 		this.currentEvent.apply();
-		System.out.println(this.getClass().toString() + " : " + this.getEvent().getClass().toString() + " added");
+		
+		this.setChanged();
+		this.notifyObservers("event");
+		//System.out.println(this.getClass().toString() + " : " + this.getEvent().getClass().toString() + " added");
 	}
 	
 	public abstract void init();
@@ -29,11 +34,14 @@ public abstract class Room {
 	protected abstract void save();
 
 	public void solveEvent (long time) {
-		System.out.println("Room " + this.getClass().getName() + "   Time : " + time + "  /  " + this.getEvent().getStartTime());
+		//System.out.println("Room " + this.getClass().getName() + "   Time : " + time + "  /  " + this.getEvent().getStartTime());
 		if (time != this.currentEvent.getStartTime())
 			return;
 		
-		System.out.println(this.getClass().toString() + " : " + this.getEvent().getClass().toString() + " solved");
+		this.setChanged();
+		this.notifyObservers("solved");
+		
+		//System.out.println(this.getClass().toString() + " : " + this.getEvent().getClass().toString() + " solved");
 		this.eventDesappears();
 		Event e = this.currentEvent;
 		this.currentEvent = null;

@@ -3,14 +3,15 @@ package services;
 import events.Event;
 import global.Game;
 import global.Ship;
+import global.Ship.State;
 
 import java.util.Map;
 
 import org.json.simple.JSONObject;
 
-import com.httpSimpleRest.services.Service;
-
 import rooms.Room;
+
+import com.httpSimpleRest.services.Service;
 
 public class ShipState implements Service {
 	
@@ -25,8 +26,13 @@ public class ShipState implements Service {
 	public StringBuffer getAnswer(Map<String, String> arg0) {
 		Ship s = Ship.ship;
 		
-		if (s.getEngine().timeToGoal() == 0 || s.getLife().getOxygenLevel() == 0)
+		if (s.state == State.ENDED || s.state == State.KILLED)
+			return new StringBuffer("{}");
+		
+		if (s.getEngine().timeToGoal() == 0 || s.getLife().getOxygenLevel() == 0) {
+			Ship.ship.stop();
 			this.game.stop();
+		}
 		
 		JSONObject answer = new JSONObject();
 		answer.put("oxygen", s.getLife().getOxygenLevel());
