@@ -46,8 +46,12 @@ Admin.prototype.initButtons = function () {
 	for (var i=0 ; i<Object.keys(admin.rooms).length ; i++) {
 		var key = Object.keys(admin.rooms)[i];
 		var button = admin.rooms[key].querySelector("button");
+		button.key = key;
 		button.onclick = function () {
-			spaceship.solveRoom (this.parentElement.parentElement.id);
+			spaceship.solveRoom (
+				this.key,
+				spaceship.data.rooms[dataTranslate[this.key]].event.start
+			);
 		}
 	}
 }
@@ -57,22 +61,30 @@ Admin.prototype.refreshManageTools = function (options) {
 }
 Admin.prototype.loadManagment = function (data) {
 	var values = JSON.parse(data);
+	admin.params.state = values.status;
 
 	admin.params.proba.value = values.proba;
 	admin.params.goal.value = values.baseTime;
 	admin.params.oxyRate.value = values.oxygenRate;
-
-	console.log(values);
 }
 
 Admin.prototype.refreshRooms = function () {
-	if (spaceship.data == undefined) {
+	//console.log("refresh");
+	if (spaceship.data == undefined || admin.params.state == undefined
+	|| (admin.params.state != "STARTED" && admin.params.state != "READY")) {
 		window.setTimeout(admin.refreshRooms, 3000);
+		return;
+	}
+
+	if (spaceship.data.rooms == undefined) {
+		admin.refreshManageTools();
+		window.setTimeout(admin.refreshRooms, 1000);
 		return;
 	}
 
 	var event = null;
 
+	//console.log(admin.params);
 	var oxygen = spaceship.data.oxygen;
 	admin.rooms.life.querySelector(".specialLine .special").innerHTML = "" + oxygen + "%";
 

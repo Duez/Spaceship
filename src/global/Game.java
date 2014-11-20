@@ -52,6 +52,7 @@ public class Game {
 			Ship.ship.state = State.KILLED;
 
 		this.status = Status.STOPED;
+		System.out.println(Ship.ship.state);
 		
 		return true;
 	}

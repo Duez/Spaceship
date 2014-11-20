@@ -10,6 +10,7 @@ ServerCommunication.prototype.loadData = function (addr, callback) {
 	this.xhr.onreadystatechange  = function() {
 		if(xhr.readyState  == 4) {
 			if(xhr.status  == 200) {
+				//console.log ("<- " + xhr.responseText);
 				callback(xhr.responseText);
 			}
 		}

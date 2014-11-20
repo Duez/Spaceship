@@ -14,7 +14,14 @@ public class RoomSolver implements Service {
 	public StringBuffer getAnswer(Map<String, String> args) {
 		if (args.containsKey("room") && args.containsKey("time")) {
 			Room r = null;
-			long time = new Long(args.get("time"));
+			
+			long time = 0;
+			try {
+				time = new Long(args.get("time"));
+			} catch (NumberFormatException e) {
+				System.err.println("Impossible to translate time");
+				return new StringBuffer();
+			}
 			switch (args.get("room")) {
 			case "computer":
 				r = Ship.ship.getComputer();

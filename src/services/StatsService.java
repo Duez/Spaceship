@@ -1,16 +1,15 @@
 package services;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import stats.NamesSaver;
 
 import com.httpSimpleRest.services.Service;
 
@@ -18,61 +17,36 @@ public class StatsService implements Service {
 
 	@Override
 	public StringBuffer getAnswer(Map<String, String> arg0) {
-		JSONArray answer = new JSONArray();
 		JSONParser jsp = new JSONParser();
+		File scores = new File("data/stats.json");
 		
-		File stats = new File("data/stats.json");
-		if (stats.exists()) {
+		if (arg0.containsKey("names")) {
+			NamesSaver ns = new NamesSaver();
+			boolean correct = true;
+			
+			int id = new Integer(arg0.get("id"));
+			JSONArray names = null;
 			try {
-				answer = (JSONArray)jsp.parse(new FileReader(stats));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+				names = (JSONArray)jsp.parse(arg0.get("names"));
 			} catch (ParseException e) {
-				e.printStackTrace();
+				System.err.println("Parameter names is not a correct json");
+				correct = false;
 			}
 			
-			if (arg0.containsKey("names")) {
-				try {
-					JSONArray names = (JSONArray) jsp.parse(arg0.get("names"));
-					this.addAndSaveNames (answer, names);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-			}
+			if (correct)
+				if (arg0.containsKey("id"))
+					ns.addNames(scores, id, names);
+				else
+					ns.addNames(scores, names);
 		}
 		
-		return new StringBuffer(answer.toJSONString());
-	}
-
-	@SuppressWarnings("unchecked")
-	private void addAndSaveNames(JSONArray stats, JSONArray names) {
-		JSONObject higher = new JSONObject();
-		higher.put("id", -1);
-		
-		for (Object obj : stats) {
-			JSONObject current = (JSONObject)obj;
-			Number idCurrent = (Number)current.get("id");
-			Number idHigher = (Number)higher.get("id");
-			
-			if (idCurrent.intValue() > idHigher.intValue())
-				higher = current;
+		JSONArray scoresArray = new JSONArray();
+		try {
+			scoresArray = (JSONArray)jsp.parse(new FileReader(scores));
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
 		}
-		
-		if (((Number)higher.get("id")).intValue() > 0) {
-			higher.put("names", names);
-			
-			File statsFile = new File("data/stats.json");
-			statsFile.delete();
-			try {
-				FileWriter fw = new FileWriter(statsFile);
-				fw.write(stats.toJSONString());
-				fw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		return new StringBuffer(scoresArray.toJSONString());
 	}
 
 }

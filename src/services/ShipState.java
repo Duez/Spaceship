@@ -26,8 +26,11 @@ public class ShipState implements Service {
 	public StringBuffer getAnswer(Map<String, String> arg0) {
 		Ship s = Ship.ship;
 		
+		//System.out.println(s.state);
 		if (s.state == State.ENDED || s.state == State.KILLED)
 			return new StringBuffer("{}");
+		
+		//System.out.println("ok");
 		
 		if (s.getEngine().timeToGoal() == 0 || s.getLife().getOxygenLevel() == 0) {
 			Ship.ship.stop();
@@ -54,6 +57,8 @@ public class ShipState implements Service {
 			}
 		}
 		answer.put("rooms", rooms);
+		
+		//System.out.println(answer.toJSONString());
 		
 		return new StringBuffer(answer.toJSONString());
 	}
