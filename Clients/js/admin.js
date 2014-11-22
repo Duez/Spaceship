@@ -119,6 +119,13 @@ Admin.prototype.refreshRooms = function () {
 	window.setTimeout(admin.refreshRooms, 3000);
 }
 
+/*var getStats = function() {
+	var names = ["Marc","Yoann","Sophie"];
+	spaceship.servCom.askServer("/stats", {"id":1, "names":JSON.stringify(names)}, function(data){
+		document.getElementById("pstats").innerHTML = data
+	});
+}*/
+
 
 var admin = new Admin();
 admin.init();

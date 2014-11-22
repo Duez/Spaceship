@@ -44,9 +44,11 @@ public class StatsManager implements JsonTranslater{
 		jso.put("rooms", array);
 		System.out.println(array.toJSONString());
 		
-		jso.put("general", this.general.toJson());
-		
 		return jso;
+	}
+	
+	public JSONObject toJSONLight () {
+		return this.general.toJson();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -61,14 +63,25 @@ public class StatsManager implements JsonTranslater{
 				e.printStackTrace();
 			} catch (IOException e) {}
 		
+		JSONObject currentStatLight = this.toJSONLight();
+		int id = array.size()+1;
+		currentStatLight.put("id", id);
+		array.add(currentStatLight);
+		
+		File details = new File(file.getParentFile().getPath() + "/" + id + ".json");
 		JSONObject currentStat = this.toJson();
-		currentStat.put("id", array.size()+1);
-		array.add(currentStat);
+		currentStat.put("general", this.general.toJson());
+		currentStat.put("id", id);
 		
 		try {
 			file.delete();
 			FileWriter fw = new FileWriter(file);
 			fw.write(array.toJSONString());
+			fw.close();
+			
+			details.delete();
+			fw = new FileWriter(details);
+			fw.write(currentStat.toJSONString());
 			fw.close();
 		} catch (IOException e) {
 			System.err.println("Impossible to save stats in " + file.getPath());

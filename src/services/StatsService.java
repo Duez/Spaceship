@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -15,6 +16,18 @@ import com.httpSimpleRest.services.Service;
 
 public class StatsService implements Service {
 
+	/**
+	 * All in json format
+	 * 
+	 * - No arguments : return all plays in short mode.
+	 * 
+	 * - id : return details for the game corresponding
+	 * 
+	 * - names : add names to the last game
+	 * 
+	 * - id + names : add names to the game with correct id.
+	 */
+	
 	@Override
 	public StringBuffer getAnswer(Map<String, String> arg0) {
 		JSONParser jsp = new JSONParser();
@@ -27,7 +40,8 @@ public class StatsService implements Service {
 			int id = new Integer(arg0.get("id"));
 			JSONArray names = null;
 			try {
-				names = (JSONArray)jsp.parse(arg0.get("names"));
+				String namesString = arg0.get("names").replaceAll("%22", "\"");
+				names = (JSONArray)jsp.parse(namesString);
 			} catch (ParseException e) {
 				System.err.println("Parameter names is not a correct json");
 				correct = false;
@@ -40,13 +54,18 @@ public class StatsService implements Service {
 					ns.addNames(scores, names);
 		}
 		
-		JSONArray scoresArray = new JSONArray();
 		try {
-			scoresArray = (JSONArray)jsp.parse(new FileReader(scores));
+			if (arg0.containsKey("id")) {
+				int id = new Integer(arg0.get("id"));
+				File idFile = new File("data/" + id + ".json");
+				if (idFile.exists())
+					return new StringBuffer(((JSONObject)jsp.parse(new FileReader(idFile))).toJSONString());
+			} else
+				return new StringBuffer(((JSONArray)jsp.parse(new FileReader(scores))).toJSONString());
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
-		return new StringBuffer(scoresArray.toJSONString());
+		return new StringBuffer("{}");
 	}
 
 }

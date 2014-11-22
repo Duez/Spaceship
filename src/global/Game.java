@@ -58,7 +58,8 @@ public class Game {
 	}
 	
 	public boolean reset () {
-		this.stop();
+		if (this.status != Status.STOPED)
+			this.stop();
 		Ship.ship = new Ship();
 		EventsGenerator.generator = new EventsGenerator();
 		this.sm = new StatsManager();
