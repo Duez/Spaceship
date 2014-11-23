@@ -1,5 +1,7 @@
 package stats;
 
+import global.Ship;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,6 +19,7 @@ public class GeneralStats implements JsonTranslater, Observer {
 		JSONObject jso = new JSONObject();
 		jso.put("start", this.start);
 		jso.put("stop", this.stop);
+		jso.put("win", Ship.ship.getOxygenLevel() != 0);
 		
 		return jso;
 	}
