@@ -80,12 +80,12 @@ public class GameManagment implements Service {
 			try {
 				Double d = Double.parseDouble(value);
 				if (d > 0)
-					Ship.ship.getLife().setRate(d);
+					Ship.ship.setOxygenRate(d);
 			} catch (NumberFormatException e) {
 				
 			}
 		}
-		jso.put("oxygenRate", Ship.ship.getLife().getRate());
+		jso.put("oxygenRate", Ship.ship.getOxygenRate());
 			
 		return new StringBuffer(jso.toJSONString());
 	}

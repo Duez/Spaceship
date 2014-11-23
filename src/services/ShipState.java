@@ -32,13 +32,13 @@ public class ShipState implements Service {
 		
 		//System.out.println("ok");
 		
-		if (s.getEngine().timeToGoal() == 0 || s.getLife().getOxygenLevel() == 0) {
+		if (s.getEngine().timeToGoal() == 0 || s.getOxygenLevel() == 0) {
 			Ship.ship.stop();
 			this.game.stop();
 		}
 		
 		JSONObject answer = new JSONObject();
-		answer.put("oxygen", s.getLife().getOxygenLevel());
+		answer.put("oxygen", s.getOxygenLevel());
 		answer.put("time", s.getEngine().timeToGoal());
 		
 		JSONObject rooms = new JSONObject();
