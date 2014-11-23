@@ -68,6 +68,7 @@ public class StatsManager implements JsonTranslater{
 		currentStatLight.put("id", id);
 		array.add(currentStatLight);
 		
+		
 		File details = new File(file.getParentFile().getPath() + "/" + id + ".json");
 		JSONObject currentStat = this.toJson();
 		currentStat.put("general", this.general.toJson());

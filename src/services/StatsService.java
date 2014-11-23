@@ -40,8 +40,8 @@ public class StatsService implements Service {
 			int id = new Integer(arg0.get("id"));
 			JSONArray names = null;
 			try {
-				String namesString = arg0.get("names").replaceAll("%22", "\"");
-				names = (JSONArray)jsp.parse(namesString);
+				System.out.println(arg0.get("names"));
+				names = (JSONArray)jsp.parse(arg0.get("names"));
 			} catch (ParseException e) {
 				System.err.println("Parameter names is not a correct json");
 				correct = false;
