@@ -18,10 +18,16 @@ public class Ship extends Observable {
 	
 	// Oxygen
 	private boolean increase;
-	private long since;
-	private double rate;
+	private long oxygenSince;
+	private static double oxygenRate = 1;
 	private double currentOxygen;
-	private int maxOxygen;
+	private int maxOxygen = 100;
+	
+	// Distance
+	private static int baseTime = 4*60;
+	private long timeToGoal;
+	private double speed;
+	private long timeSince;
 	
 	// Rooms
 	protected CommandCenter command;
@@ -37,10 +43,11 @@ public class Ship extends Observable {
 	
 	public Ship() {
 		this.increase = true;
-		this.since = 1;
-		this.rate = 1;
-		this.maxOxygen = 100;
+		this.oxygenSince = 1;
 		this.currentOxygen = 100;
+		
+		this.timeToGoal = Ship.baseTime * 1000;
+		this.speed = 1;
 		
 		this.allRooms = new ArrayList<>();
 		
@@ -72,12 +79,16 @@ public class Ship extends Observable {
 			r.init();
 		this.state = State.STARTED;
 		
-		this.since = System.currentTimeMillis();
+		this.oxygenSince = System.currentTimeMillis();
+		this.timeSince = this.oxygenSince;
 		
 		this.setChanged();
 		this.notifyObservers("start");
 		this.setChanged();
 		this.notifyObservers("oxygen");
+		this.setChanged();
+		this.notifyObservers("travel");
+		
 	}
 	
 	public void stop () {
@@ -88,6 +99,8 @@ public class Ship extends Observable {
 		this.notifyObservers("stop");
 		this.setChanged();
 		this.notifyObservers("oxygen");
+		this.setChanged();
+		this.notifyObservers("travel");
 	}
 	
 	public enum State {
@@ -97,25 +110,25 @@ public class Ship extends Observable {
 	// ----------------------- Oxygen -----------------------
 	
 	public int getOxygenLevel () {
-		if (this.state == State.ENDED)
+		if (this.state != State.STARTED)
 			return new Double(this.currentOxygen).intValue();
 		
 		double level = this.currentOxygen;
-		long duration = (System.currentTimeMillis() - this.since) / 1000;
+		long duration = (System.currentTimeMillis() - this.oxygenSince) / 1000;
 		
 		if (this.increase)
-			level = Math.min(this.maxOxygen, new Double(level + duration*this.rate).intValue());
+			level = Math.min(this.maxOxygen, new Double(level + duration*Ship.oxygenRate).intValue());
 		else
-			level = Math.max(0, new Double(level - duration*this.rate).intValue());
+			level = Math.max(0, new Double(level - duration*Ship.oxygenRate).intValue());
 		
 		return new Double(level).intValue();
 	}
 	
 	public void setOxygenRate(double rate) {
 		this.currentOxygen = this.getOxygenLevel();
-		this.since = System.currentTimeMillis();
+		this.oxygenSince = System.currentTimeMillis();
 		
-		this.rate = rate;
+		Ship.oxygenRate = rate;
 		
 		if (this.state == State.STARTED) {
 			this.setChanged();
@@ -125,7 +138,7 @@ public class Ship extends Observable {
 	
 	public void increaseOxygen () {
 		this.currentOxygen = this.getOxygenLevel();
-		this.since = System.currentTimeMillis();
+		this.oxygenSince = System.currentTimeMillis();
 		
 		this.increase = true;
 		
@@ -135,7 +148,7 @@ public class Ship extends Observable {
 	
 	public void decreaseOxygen () {
 		this.currentOxygen = this.getOxygenLevel();
-		this.since = System.currentTimeMillis();
+		this.oxygenSince = System.currentTimeMillis();
 		
 		this.increase = false;
 		
@@ -154,7 +167,49 @@ public class Ship extends Observable {
 	}
 	
 	public double getOxygenRate() {
-		return rate;
+		return oxygenRate;
+	}
+	
+	// ----------------------- Distance -----------------------
+	
+	public void speedUp (double speed) {
+		this.updateTime();
+		this.speed += Math.abs(speed);
+		
+		this.setChanged();
+		this.notifyObservers("travel");
+	}
+	
+	public void speedDown (double speed) {
+		this.updateTime();
+		this.speed -= Math.max(0, Math.abs(speed));
+		
+		this.setChanged();
+		this.notifyObservers("travel");
+	}
+	
+	private void updateTime () {
+		long currentTime = System.currentTimeMillis();
+		long duration = currentTime - this.timeSince;
+		this.timeToGoal = new Double(Math.max(0, this.timeToGoal - duration * this.speed)).longValue();
+		this.timeSince = currentTime;
+	}
+	
+	public int getTimeToGoal () {
+		if (this.state == State.STARTED)
+			this.updateTime();
+		int value = new Double(this.timeToGoal / 1000).intValue();
+		return value;
+	}
+	
+	public static int getBaseTime () {
+		return Ship.baseTime;
+	}
+	
+	public void setBaseTime (int time) {
+		if (this.state == State.READY)
+			this.timeToGoal = time * 1000;
+		Ship.baseTime = time;
 	}
 	
 	// ----------------------- Rooms -----------------------

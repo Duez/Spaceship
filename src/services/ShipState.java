@@ -30,16 +30,14 @@ public class ShipState implements Service {
 		if (s.state == State.ENDED || s.state == State.KILLED)
 			return new StringBuffer("{}");
 		
-		//System.out.println("ok");
-		
-		if (s.getEngine().timeToGoal() == 0 || s.getOxygenLevel() == 0) {
+		if (s.getTimeToGoal() == 0 || s.getOxygenLevel() == 0) {
 			Ship.ship.stop();
 			this.game.stop();
 		}
 		
 		JSONObject answer = new JSONObject();
 		answer.put("oxygen", s.getOxygenLevel());
-		answer.put("time", s.getEngine().timeToGoal());
+		answer.put("time", s.getTimeToGoal());
 		
 		JSONObject rooms = new JSONObject();
 		for (Room room : s.getAllRooms()) {

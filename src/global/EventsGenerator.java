@@ -17,14 +17,13 @@ public class EventsGenerator  extends Thread {
 
 	public static EventsGenerator generator; 
 	
-	private double proba;
+	private static double proba = 0.1;
 	private boolean ended;
 	
 	private static final Class<?>[] eventsClass = {Aliens.class, Fire.class, Hack.class,
 		ElectricFailure.class, Meteor.class, NoSignal.class}; 
 	
 	public EventsGenerator() {
-		this.proba = 0.1;
 		this.ended = false;
 	}
 	
@@ -42,7 +41,7 @@ public class EventsGenerator  extends Thread {
 			
 			double rand = Math.random();
 			
-			if (rand <= this.proba) {
+			if (rand <= EventsGenerator.proba) {
 				List<Room> rooms = new ArrayList<Room>(Ship.ship.getAllRooms());
 				rooms.remove(Ship.ship.getCommand());
 				Collections.shuffle(rooms);
@@ -84,7 +83,7 @@ public class EventsGenerator  extends Thread {
 	}
 	
 	public void setProba(double proba) {
-		this.proba = proba;
+		EventsGenerator.proba = proba;
 	}
 
 }
