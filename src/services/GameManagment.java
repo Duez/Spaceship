@@ -67,12 +67,12 @@ public class GameManagment implements Service {
 			try {
 				Integer i = Integer.parseInt(value);
 				if (i > 0)
-					Ship.ship.getEngine().setBaseTimeToGoal(i);
+					Ship.ship.setBaseTime(i);
 			} catch (NumberFormatException e) {
 				
 			}
 		}
-		jso.put("baseTime", Ship.ship.getEngine().getBaseTimeToGoal());
+		jso.put("baseTime", Ship.getBaseTime());
 		
 		// Set the decrease/increase of oxygen each second.
 		if (args.containsKey("oxygenRate")) {
@@ -80,12 +80,12 @@ public class GameManagment implements Service {
 			try {
 				Double d = Double.parseDouble(value);
 				if (d > 0)
-					Ship.ship.getLife().setRate(d);
+					Ship.ship.setOxygenRate(d);
 			} catch (NumberFormatException e) {
 				
 			}
 		}
-		jso.put("oxygenRate", Ship.ship.getLife().getRate());
+		jso.put("oxygenRate", Ship.ship.getOxygenRate());
 			
 		return new StringBuffer(jso.toJSONString());
 	}

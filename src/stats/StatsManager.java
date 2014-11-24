@@ -19,11 +19,19 @@ import rooms.Room;
 public class StatsManager implements JsonTranslater{
 	
 	private GeneralStats general;
+	private OxygenObserver oxObs;
+	private TravelObserver traObs;
 	private List<RoomStat> rooms;
 	
 	public StatsManager() {
 		this.general = new GeneralStats();
 		Ship.ship.addObserver(this.general);
+		
+		this.oxObs = new OxygenObserver();
+		Ship.ship.addObserver(this.oxObs);
+		
+		this.traObs = new TravelObserver();
+		Ship.ship.addObserver(this.traObs);
 		
 		this.rooms = new ArrayList<RoomStat>(Ship.ship.getAllRooms().size());
 		for (Room r : Ship.ship.getAllRooms()) {
@@ -37,6 +45,9 @@ public class StatsManager implements JsonTranslater{
 	@Override
 	public JSONObject toJson() {
 		JSONObject jso = new JSONObject();
+		
+		jso.put("oxygen", this.oxObs.toJson());
+		jso.put("travel", this.traObs.toJson());
 		
 		JSONArray array = new JSONArray();
 		for (RoomStat rs : this.rooms)
@@ -67,6 +78,7 @@ public class StatsManager implements JsonTranslater{
 		int id = array.size()+1;
 		currentStatLight.put("id", id);
 		array.add(currentStatLight);
+		
 		
 		File details = new File(file.getParentFile().getPath() + "/" + id + ".json");
 		JSONObject currentStat = this.toJson();
