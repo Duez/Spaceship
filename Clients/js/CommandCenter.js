@@ -191,6 +191,11 @@ CommandCenter.prototype = {
     
     update : function () {
         var self = this
+        
+        if (Object.keys(spaceship.data).length==0){
+            this.end();
+        }
+        
         this.update_event();
         this.update_goal();
         this.update_oxygen();
@@ -235,7 +240,8 @@ CommandCenter.prototype = {
         $("#end").css('display','block')
         
         //fail/win
-        if (spaceship.data.oxygen == 0) {
+        
+        if (this.mem.time[this.mem.time.length-1] > 2) {
             $("#result").html("Game Over")
             $("#result").css("color","rgba(253,0,13,1)")
         }else{
@@ -273,24 +279,26 @@ CommandCenter.prototype = {
         }
         
         //stats
-        for (var key in spaceship.data.rooms) {
-            var div = jQuery('<div/>', {
-                html: rooms_def[key].name,
-                class: 'room_stat'
-            })
-            
-            for (var i=0; i<l; i++){
-                if (this.mem[key][i] != "0"){
-                    var left = ((100*i)/l)+"%"
-                    jQuery('<div/>', {
-                        style: 'width : '+width+'; left : '+left+'; background-color : '+event_def[this.mem[key][i]].color,
-                        class: 'event_bar'
-                    })
-                    .appendTo(div)
-                }
+        for (var key in this.mem) {
+            if (key != "oxy" && key != "time"){
+                var div = jQuery('<div/>', {
+                    html: rooms_def[key].name,
+                    class: 'room_stat'
+                })
                 
+                for (var i=0; i<l; i++){
+                    if (this.mem[key][i] != "0"){
+                        var left = ((100*i)/l)+"%"
+                        jQuery('<div/>', {
+                            style: 'width : '+width+'; left : '+left+'; background-color : '+event_def[this.mem[key][i]].color,
+                            class: 'event_bar'
+                        })
+                        .appendTo(div)
+                    }
+                    
+                }
+                div.appendTo("#stats")
             }
-            div.appendTo("#stats")
         }
         
     },
@@ -376,8 +384,24 @@ function shipProc(p) {
 var cc = new CommandCenter()
 //ship canvas and processing sketch
 var proc = null
+
 window.onload = function () {
-    cc.init()
+    admin.refreshManageTools ({"status":"reset"});
+    setTimeout(function(){cc.init()}, 2000);
+}
+
+document.onkeypress = function (e) {
+    e = e || window.event;
+    
+    var key = e.keyCode;
+    if (key==0) key = e.which
+        
+    if (key == 13){
+        e.preventDefault()
+        $("#start").css('display','none')
+        admin.refreshManageTools ({"status":"start"});
+        document.onkeypress = function () {};
+    }
 }
 
 

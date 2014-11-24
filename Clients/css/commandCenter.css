@@ -169,25 +169,40 @@ body {
     padding-left: 8.8%;
 }
 
-
-
 #end {
     display:none;
     position:absolute;
     width:80%;
-    height:85%;
-    top:5%;
+    height:95%;
+    top:0%;
     right:5%;
     padding: 2.5vh 5vw;
-    background:grey;
+    background: rgba(50,50,50,0.95);
     z-index : 100;
 }
 
-#result, #score {
-    width:100%;
-    height:10%;
+#start {
+    position:absolute;
+    width:30%;
+    top:40%;
+    right:35%;
+    background:black;
+    z-index : 100;
+    padding: 2% 0%;
+    font-size: 4vh;
+    font-family: courier;
+    font-weight: bold;
+    font-style: normal;
+    text-transform : uppercase;
     text-align:center;
-    font-size: 7vh;
+    color: rgba(255,255,255,0.8);
+}
+
+#result, #score, #footer {
+    width:100%;
+    height:8%;
+    text-align:center;
+    font-size: 5vh;
     font-family: monospace;
     font-weight: bold;
     letter-spacing: 1vw;
