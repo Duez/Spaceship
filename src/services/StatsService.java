@@ -37,7 +37,6 @@ public class StatsService implements Service {
 			NamesSaver ns = new NamesSaver();
 			boolean correct = true;
 			
-			int id = new Integer(arg0.get("id"));
 			JSONArray names = null;
 			try {
 				System.out.println(arg0.get("names"));
@@ -48,9 +47,10 @@ public class StatsService implements Service {
 			}
 			
 			if (correct)
-				if (arg0.containsKey("id"))
+				if (arg0.containsKey("id")) {
+					int id = new Integer(arg0.get("id"));
 					ns.addNames(scores, id, names);
-				else
+				} else
 					ns.addNames(scores, names);
 		}
 		

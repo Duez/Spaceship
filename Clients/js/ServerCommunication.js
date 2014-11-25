@@ -26,7 +26,11 @@ ServerCommunication.prototype.askServer = function (pageName, args, callback) {
 
 	for(var key in args) {
     	var value = args[key];
-    	request += "&" + key + "=" + value;
+    	if (Array.isArray(value)) {
+    		for (var i=0 ; i<value.length ; i++)
+    			request  += "&" + key + "[]=" + value[i];
+    	} else
+	    	request += "&" + key + "=" + value;
 	}
 
 	this.loadData(request, callback);

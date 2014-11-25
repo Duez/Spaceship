@@ -93,7 +93,7 @@ public class Game {
 		index.put("managment", new GameManagment(g, server));
 		index.put("stats", new StatsService());
 		
-		ClientThread.verbose = false;
+		ClientThread.verbose = true;
 		server.start();
 	}
 	

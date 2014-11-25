@@ -121,7 +121,7 @@ Admin.prototype.refreshRooms = function () {
 
 /*var getStats = function() {
 	var names = ["Marc","Yoann","Sophie"];
-	spaceship.servCom.askServer("/stats", {"id":1, "names":JSON.stringify(names)}, function(data){
+	spaceship.servCom.askServer("/stats", {"names":names}, function(data){
 		document.getElementById("pstats").innerHTML = data
 	});
 }*/
