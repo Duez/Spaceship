@@ -194,13 +194,12 @@ CommandCenter.prototype = {
         
         if (Object.keys(spaceship.data).length==0){
             this.end();
+            return;
         }
         
         this.update_event();
         this.update_goal();
         this.update_oxygen();
-        
-        this.save()
         
         if (spaceship.data.oxygen == 0) {
             this.end()
@@ -237,85 +236,11 @@ CommandCenter.prototype = {
     },
     
     end : function() {
-        $("#end").css('display','block')
-        
-        //fail/win
-        
-        if (this.mem.time[this.mem.time.length-1] > 2) {
-            $("#result").html("Game Over")
-            $("#result").css("color","rgba(253,0,13,1)")
-        }else{
-            $("#result").html("Victory")
-            $("#result").css("color","rgba(7,165,210,1)")
-        }
-        
-        //game_time
-        var ellapsed_time = ( new Date().getTime() - this.begin ) / 1000
-        var minute = Math.floor(ellapsed_time/60)
-        var sec = Math.floor(ellapsed_time%60)
-        if (sec<10) sec = "0"+sec
-        $("#score").html( minute + ":" + sec )
-        
-        //graph
-        var l = this.mem.oxy.length
-        var width = (100/l)+"%"
-        for (var i=0; i<l; i++){
-            var left = ((100*i)/l)+"%"
-            var height = ((100*this.mem.oxy[i])/this.oxygen.max)+"%"
-            var top = (100-((100*this.mem.oxy[i])/this.oxygen.max))+"%"
-            jQuery('<div/>', {
-                style: 'width : '+width+'; left : '+left+'; height : '+height+'; top : '+top,
-                class: 'oxygen_bar'
-            })
-            .appendTo("#graph")
-            
-            var height = (100-((100*this.mem.time[i])/this.goal.max))+"%"
-            var top = ((100*this.mem.time[i])/this.goal.max)+"%"
-            jQuery('<div/>', {
-                style: 'width : '+width+'; left : '+left+'; height : '+height+'; top : '+top,
-                class: 'time_bar'
-            })
-            .appendTo("#graph")    
-        }
-        
-        //stats
-        for (var key in this.mem) {
-            if (key != "oxy" && key != "time"){
-                var div = jQuery('<div/>', {
-                    html: rooms_def[key].name,
-                    class: 'room_stat'
-                })
-                
-                for (var i=0; i<l; i++){
-                    if (this.mem[key][i] != "0"){
-                        var left = ((100*i)/l)+"%"
-                        jQuery('<div/>', {
-                            style: 'width : '+width+'; left : '+left+'; background-color : '+event_def[this.mem[key][i]].color,
-                            class: 'event_bar'
-                        })
-                        .appendTo(div)
-                    }
-                    
-                }
-                div.appendTo("#stats")
-            }
-        }
-        
+        setTimeout(function(){
+            window.location.href = "result.html"
+        },2000)
     },
     
-    save : function() {
-        if(this.isStarted){
-            this.mem.oxy.push(spaceship.data.oxygen)
-            this.mem.time.push(spaceship.data.time)
-            for (var key in spaceship.data.rooms) {
-                var e = "0"
-                if(typeof spaceship.data.rooms[key].event != 'undefined'){
-                    e = spaceship.data.rooms[key].event.name
-                }
-                this.mem[key].push(e)
-            }
-        }
-    }  
 
 }//end CommandCenter prototype
 

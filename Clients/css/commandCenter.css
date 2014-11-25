@@ -198,36 +198,6 @@ body {
     color: rgba(255,255,255,0.8);
 }
 
-#result, #score, #footer {
-    width:100%;
-    height:8%;
-    text-align:center;
-    font-size: 5vh;
-    font-family: monospace;
-    font-weight: bold;
-    letter-spacing: 1vw;
-    background: rgba(0,0,0,0.8);
-    border-radius: 2vh;
-    margin-bottom: 2vh;
-    color :rgba(7,165,210,1);
-}
-
-#graph{
-    width:100%;
-    height:35%;
-    background: rgba(0,0,0,0.8);
-    margin-bottom: 2vh;
-    position: relative;
-}
-
-#stats{
-    width:100%;
-    height:35%;
-    background: rgba(0,0,0,0.8);
-    margin-bottom: 2vh;
-    border-radius: 2vh;
-}
-
 .oxygen_bar{
     position:absolute;
     background:rgba(7,165,210,1);
@@ -239,25 +209,4 @@ body {
     border-top:solid;
     border-width:5px;
     border-color:orangered;
-}
-
-.room_stat{
-    width:100%;
-    height:4vh;
-    margin-bottom:1vh;
-    text-align:center;
-    font-size: 3.5vh;
-    font-family: monospace;
-    font-weight: bold;
-    letter-spacing: 1vw;
-    color :rgba(7,165,210,1);
-    position:relative;
-}
-
-.event_bar{
-    position:absolute;
-    height:100%;
-    opacity:0.5;
-    top:0%;
-    
 }

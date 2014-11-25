@@ -27,28 +27,28 @@ event_def = {
         "name" : "no signal",
 		"icon" : null,
 		"effect" : "blink",
-		"color" : "purple"
+		"color" : "yellow"
 	},
 	"events.Meteor" : 
 	{
         "name" : "meteor",
 		"icon" : null,
 		"effect" : "blink",
-		"color" : "brown"
+		"color" : "yellow"
 	}, 
     "events.ElectricFailure" : 
     {
         "name" : "electric failure",
         "icon" : null,
         "effect" : "blink",
-        "color" : "brown"
+        "color" : "yellow"
     }, 
 	"default" : 
 	{
         "name" : "unknow event",
 		"icon" : null,
 		"effect" : "blink",
-		"color" : "grey"
+		"color" : "yellow"
 	}
 }
      
