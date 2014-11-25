@@ -1,6 +1,7 @@
 
 function Result() {
 
+    this.names=[]
 }
 
 
@@ -12,6 +13,7 @@ Result.prototype = {
             data = JSON.parse(data);
             if (window.location.search == ""){
                 self.stat = data[data.length-1]
+                self.addName()
             }else{
                 var id = window.location.search.replace("?id=","")
                 self.stat = data[id-1]                
@@ -32,6 +34,37 @@ Result.prototype = {
                 self.display(data)
             }
         });
+    },
+    
+    addName : function(){
+        var self=this;
+        
+        document.getElementById("name").value = ""
+        
+        if (this.names.length==3){
+            document.getElementById("form").style.display = "none";
+            document.onkeydown = function (e) { checkKey(e);}
+            spaceship.servCom.askServer("/stats", {"names": this.names})
+        }else{
+            if (this.names.length==0) document.getElementById("player").innerHTML = "fireman"
+            if (this.names.length==1) document.getElementById("player").innerHTML = "soldier"
+            if (this.names.length==2) document.getElementById("player").innerHTML = "engineer"
+            document.getElementById("form").style.display = "block";
+            document.getElementById('name').focus();
+            
+            document.onkeydown = function (e) {    
+                e = e || window.event;
+                var key = e.keyCode;
+                if (key==0) key = e.which
+                if (key == 13){
+                    e.preventDefault()
+                    self.names.push(document.getElementById("name").value)
+                    self.addName()
+                }
+            }
+        }
+        
+
     },
     
     display : function() {

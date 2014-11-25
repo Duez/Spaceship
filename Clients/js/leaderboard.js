@@ -37,7 +37,13 @@ function build (data) {
     
     for (var i=0; i<data.length; i++){
         
-        var team = "?"      //TODO
+        var team = "?"
+        if (typeof data[i].names != "undefined"){ 
+            team = ""
+            for (var j=0; j<data[i].names.length; j++){
+                team += " " + data[i].names[j]
+            }
+        }
         var status;
         if (data[i].win) status = "win"
         else status = "fail"
