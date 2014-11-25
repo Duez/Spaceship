@@ -269,7 +269,7 @@ Game1.prototype = {
 	
 	var key = e.keyCode
 	if (key == 0) key = e.which		
-        if(this.key == key.toString() & this.up){
+        if(this.key == String.fromCharCode(key.toString()).toLowerCase().charCodeAt(0).toString()  & this.up){
             this.count++;
 			this.level.css("width", "" + Math.floor( (this.count/this.goal)*100 ) + "%");
 			this.up = false;
@@ -331,7 +331,7 @@ Game2.prototype = {
 	var key = e.keyCode;
 	if (key==0) key= e.which;
         
-        if(this.key == key.toString()){
+        if(this.key == String.fromCharCode(key.toString()).toLowerCase().charCodeAt(0).toString() ){
             this.count++;
 			this.level.css("width", "" + Math.floor( (this.count/this.goal)*100 ) + "%");
         }
@@ -391,7 +391,8 @@ Game3.prototype = {
         
 	var key = e.keyCode;
 	if (key==0) key = e.which
-        if ( ( this.key1 == key.toString() || this.key2 == key.toString() ) && key.toString() != this.previousKey) {
+        var k = String.fromCharCode(key.toString()).toLowerCase().charCodeAt(0).toString() 
+        if ( ( this.key1 == k || this.key2 == k ) && k != this.previousKey) {
             this.previousKey = key.toString() 
             this.count++;
             this.level.css("width", "" + Math.floor( (this.count/this.goal)*100 ) + "%");
